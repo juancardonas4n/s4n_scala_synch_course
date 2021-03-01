@@ -1,0 +1,185 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{txfonts}
+\usepackage{graphicx}
+\usepackage{keystroke}
+\usepackage{color}
+\usepackage[colorlinks = true,
+linkcolor = green,
+urlcolor = blue,
+citecolor = yellow,
+anchorcolor = brown]{hyperref}
+\usepackage{listings}
+\usepackage{alltt}
+\usepackage{multicol}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\newcommand{\noterm}[1]{\color{blue} \langle #1 \rangle \color{blue}}
+\newcommand{\produce}{\color{red} \coloneqq \color{red}}
+\newcommand{\alter}{\color{red} \mid \color{red}}
+\newcommand{\catterm}[1]{\color{magenta} \text{#1} \color{magenta}}
+\newcommand{\term}[1]{\color{cyan} \text{#1} \color{cyan}}
+\newcommand{\openopt}{\color{black} \text{[} \color{black}}
+\newcommand{\closeopt}{\color{black} \text{]} \color{black}}
+\newcommand{\severals}{\color{black} \ldots \color{black}}
+
+\newcounter{ejercicio}
+\newcommand{\ejercicio}{\stepcounter{ejercicio}%
+  \paragraph\noindent\textbf{Ejercicio \theejercicio.\hspace{4pt}}}
+
+\newcounter{problema}
+\newcommand{\problema}{\stepcounter{problema}%
+  \paragraph\noindent\textbf{Problema \theproblema.\hspace{4pt}}}
+\newcommand{\WindowsLogo}{\raisebox{-0.1em}{%
+    \includegraphics[height=0.8em]{../../imagenes/Windows_3_logo_simplified}}}
+\newcommand{\WinKey}{\keystroke{\WindowsLogo}}
+
+\newcommand{\Subversion}{\href{https://subversion.apache.org/}{subversion}}
+\newcommand{\Riouxsvn}{\href{https://riouxsvn.com/}{Riouxsvn}}
+
+\title{Taller de Funciones y recursión en Scala}
+\date{24 de febrero de 2021}
+\author{S4N Campus}
+%\institute{S4N}
+
+\begin{document}
+\maketitle
+
+\section{Preliminares}
+\label{sec:preliminares}
+
+Este taller cuenta con el objetivo de entender que es la programación
+funcional en Scala.
+
+\section{Funciones literales/Funciones anónimas}
+\label{sec:fun-lit-fun-anon}
+
+\ejercicio. Defina una \emph{función literal} llamada \texttt{areaTrianguloRectangulo} que se encargue de calcular el área de un triángulo rectángulo. Recibe los dos lados rectos.
+\ejercicio. Defina una \emph{función literal} llamada \texttt{areaDeUnCirculo} que en vez de utilizar una función anónima, utilice la implementación del \texttt{trait} correspondiente (\texttt{Function1}, \texttt{Function2}, \texttt{Funtion3}, $\ldots$).
+
+\section{Funciones de primera clase y funciones de alto orden}
+
+\ejercicio Defina una función literal llamada \texttt{calSalario} que reciba dos parámetros de tipo \texttt{Double} (devengado y deducciones) y
+que retorna el valor clásico del salario de una persona:
+\[
+  devengado - deducciones
+\]
+\ejercicio Defina una función literal llamada \texttt{calSalarioBono} que reciba dos parámetros de tipo \texttt{Double} (devengado y deducciones) y calcule el salario con el siguiente valor.
+\[
+  devengado * 1.10 - deducciones
+\]
+\ejercicio Defina una función llamada \texttt{compSalario} que recibe tres parámetros: el primero una función de tipo \texttt{(Double,Double)=>Double} y las otras dos son: \texttt{devengado} y \texttt{deducciones}. Prueba esta función pasado las dos
+funciones anteriores \texttt{calSalario} y \texttt{calSalarioBono}.
+\ejercicio Defina una función llamada \texttt{genCalSalarioBono} esta función se encarga de generar funciones que computan diferente bonos. La función
+
+\begin{lstlisting}[language=Scala]
+def genCalSalarioBono(bono:Double):(Double,Double) => Double = ???
+\end{lstlisting}
+\ejercicio Utilizando la función generadora de funciones \texttt{genCalSalarioBono} cree la función literal \texttt{calSalario5} que da un bono
+del 5\%.
+\ejercicio Utilizando la función generadora de funciones \texttt{genCalSalarioBono} cree la función literal \texttt{calCalario20} que da un bono
+del 20\%.
+
+\section{Clausuras}
+\label{sec:clausuras}
+
+\ejercicio Declare una función \texttt{calSalarioBonoClausura} que reciba \emph{dos parámetros} (devengados y deducciones) y que aplique la siguiente fórmula:
+
+\[
+  devengado \times bono - deducciones
+\]
+
+Donde \texttt{bono} es una valor declarado externamente (Una clausura).
+
+\ejercicio Utilizando la función \texttt{compSalario} aplique la función utilizando como primer parámetro \texttt{calSalarioBonoClausura} y calculado varios salarios diferentes.
+
+\section{Funciones aplicadas parcialmente}
+\label{sec:func-aplic-parc}
+
+\ejercicio Utilizando la función \texttt{genCalSalarioBono} cree una función literal \texttt{calCalario15} que se obtiene
+a través de la aplicación parcial de \texttt{genCalSalarioBono} con un valor $0.15$
+\ejercicio Utilizando la función \texttt{genCalSalarioBono} cree una función literal \texttt{calCalario100} que se obtiene
+a través de la aplicación parcial de \texttt{genCalSalarioBono} con un valor $2.00$.
+
+\section{Funciones currificadas}
+\label{sec:func-curr}
+
+\ejercicio Utilizando currificación defina una función \texttt{genCalSalarioBono2} donde el último parámetro (el currificado) es el valor del bono y los dos primeros parámetros son: el devengado y la deducción.
+\ejercicio Utilizando la función \texttt{genCalSalarioBono2} cree una función literal \texttt{calCalario25} que se obtiene
+a través de la aplicación currificada de \texttt{genCalSalarioBono2} con un valor $0.25$.
+
+\pagebreak
+
+\section{Recursividad}
+\label{sec:recursividad}
+
+\ejercicio Implementar la función de factorial utilizando recursividad en Scala.
+
+\[
+  factorial(n) = 
+\begin{cases}
+  1 & n = 0\\
+  1 & n = 1\\
+  n \times factorial(n-1) & \text{Otra forma}\\
+\end{cases}
+\]
+
+\ejercicio Implementar la siguiente función de forma recursiva en Scala
+
+\[
+  f(n) =
+  \begin{cases}
+    0 & n = 0 \\
+    1 & n = 1 \\
+    f(n-1) + f(n-2) & \text{Otra forma}\\
+  \end{cases}
+\]
+
+\ejercicio Reescriba la función de factorial para que se ejecute bajo recursividad de cola.
+
+% \section{Bibliografía}
+% \label{sec:bibliografia}
+% \bibliographystyle{amsalpha}
+% \bibliography{S4N_Git_Tutorial}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

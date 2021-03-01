@@ -1,0 +1,214 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{txfonts}
+\usepackage{graphicx}
+\usepackage{keystroke}
+\usepackage{color}
+\usepackage[colorlinks = true,
+linkcolor = green,
+urlcolor = blue,
+citecolor = yellow,
+anchorcolor = brown]{hyperref}
+\usepackage{listings}
+\usepackage{alltt}
+\usepackage{multicol}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\newcommand{\noterm}[1]{\color{blue} \langle #1 \rangle \color{blue}}
+\newcommand{\produce}{\color{red} \coloneqq \color{red}}
+\newcommand{\alter}{\color{red} \mid \color{red}}
+\newcommand{\catterm}[1]{\color{magenta} \text{#1} \color{magenta}}
+\newcommand{\term}[1]{\color{cyan} \text{#1} \color{cyan}}
+\newcommand{\openopt}{\color{black} \text{[} \color{black}}
+\newcommand{\closeopt}{\color{black} \text{]} \color{black}}
+\newcommand{\severals}{\color{black} \ldots \color{black}}
+
+\newcounter{ejercicio}
+\newcommand{\ejercicio}{\stepcounter{ejercicio}%
+  \paragraph\noindent\textbf{Ejercicio \theejercicio.\hspace{4pt}}}
+
+\newcounter{problema}
+\newcommand{\problema}{\stepcounter{problema}%
+  \paragraph\noindent\textbf{Problema \theproblema.\hspace{4pt}}}
+\newcommand{\WindowsLogo}{\raisebox{-0.1em}{%
+    \includegraphics[height=0.8em]{../../imagenes/Windows_3_logo_simplified}}}
+\newcommand{\WinKey}{\keystroke{\WindowsLogo}}
+
+\newcommand{\Subversion}{\href{https://subversion.apache.org/}{subversion}}
+\newcommand{\Riouxsvn}{\href{https://riouxsvn.com/}{Riouxsvn}}
+
+\title{Taller de Tipos de datos inmutables\\Listas}
+\date{25 de febrero de 2021}
+\author{S4N Campus}
+%\institute{S4N}
+
+\begin{document}
+\maketitle
+
+\section{Preliminares}
+\label{sec:preliminares}
+
+Este taller tiene como objetivo la creación de funciones recursivas para el manejo de listas.
+
+\section{Coincidencia de patrones}
+\label{sec:listas}
+
+La coincidencia de patrones trabaja de forma similar a un
+\texttt{switch-case} en Java. La idea básica de la coincidencia de
+patrones es que \texttt{match} puede descender en la estructura de la
+expresión que examina y extrae sub-expresiones de esa estructura. En primer lugar, si un patrón coincide con un literal, ese valor cumple.
+
+\begin{lstlisting}[language=Scala]
+10 match => { case 10 => "Diez" }
+\end{lstlisting}
+
+En el anterior caso el valor del literal $10$ en el \texttt{case} coincide con el valor entrado en \texttt{match}. El resultado es \texttt{"Diez"}.
+
+\begin{lstlisting}[language=Scala]
+10 match => {}
+   case 1 => "No"
+   case n => s"Diez = $n"
+}
+\end{lstlisting}
+
+En el anterior caso, el literal
+$1$ no coinicide con el valor entrado en el \texttt{match}, entonces
+la variable \texttt{n} se hace coincidir con el valor
+$10$ y por lo tanto el resultado final es \texttt{"Diez = 10"}.
+
+Miremos más ejemplos:
+
+\begin{itemize}
+\item \texttt{List(4,5,6) match \{ case \_ => 1 \}} resulta en
+  \texttt{1}. El \texttt{\_} es un comodín que significa cualquier
+  valor.
+\item \texttt{List(4,5,5) match \{ case Const(h,\_) => h \}} resulta en \texttt{4}. La coincidencia de patrones hace que el valor del constructor \texttt{Const}
+  quede en \texttt{h} y se hace coincidir con dicho valor.
+\item \texttt{List(4,5,6) match \{ case Const(\_,t) => t \}} resulta en \texttt{List(5,6)}. La coincindencia de patrones que el valor del constructor \texttt{Const}
+  quede en \texttt{t} y se hace coincidir con el resto de la lista.
+\item \texttt{List(4,5,6) match \{ case Nil => 1 \}} resulta en \texttt{MatchError}. La lista de \texttt{match} no esta vacía.
+\end{itemize}
+
+\ejercicio. ¿Cuál es el resultado de la siguiente expresión \texttt{match}?
+\begin{lstlisting}[language=Scala]
+val x = List(4,5,6,7,8) match {
+   case Const(x, Const(5, Const(7, _)))        => x
+   case Nil                                    => 1
+   case Const(x,Const(y,Const(6, Const(7,_)))) => x + y
+   case Const(h,t)                             => h + sum(t)
+   case _                                      => 777
+}
+\end{lstlisting}$\square$
+
+\section{Operaciones sobre listas}
+\label{sec:oper-sobre-list}
+
+
+\ejercicio Implementa la función \texttt{tail} que remueva el primer elemento de un lista. $\square$
+\ejercicio Implementa la función \texttt{head} que devuelva el primer elemento de la lista. $\square$
+\ejercicio Implemente la siguiente función.
+\begin{lstlisting}[language=Scala]
+def and(lst:List[Boolean]):Boolean = ???
+\end{lstlisting}
+Esta función recibe un arreglo de valores \texttt{Boolean} y devuelve \texttt{true} si todos los valores son verdaderos,
+en caso contrario devuelve \texttt{false}. $\square$
+\ejercicio Implemente la siguiente función.
+\begin{lstlisting}[language=Scala]
+def or(lst:List[Boolean]):Boolean = ???
+\end{lstlisting}
+Esta función recibe un arreglo de valores \texttt{Boolean} y devuelve \texttt{false} si todos los valores son falsos,
+en caso contrario devuelve \texttt{true}. $\square$
+\ejercicio Implemente la siguiente función.
+\begin{lstlisting}[language=Scala]
+def max(lst:List[Int]):Int = ???
+\end{lstlisting}
+Esta función recibe un arreglo de valores \texttt{Int} y devuelve valor máximo de todos los valores en la lista. $\square$
+\ejercicio Implemente la siguiente función.
+\begin{lstlisting}[language=Scala]
+def min(lst:List[Long]):Long = ???
+\end{lstlisting}
+Esta función recibe un arreglo de valores \texttt{Long} y devuelve valor mínimo de todos los valores en la lista. $\square$
+\ejercicio Implemente la siguiente función.
+\begin{lstlisting}[language=Scala]
+def minMax(lst:List[Double]):(Double,Double) = ???
+\end{lstlisting}
+Esta función recibe un arreglo de valores \texttt{Double} y devuelve
+valor (mínimo,máximo) de todos los valores en la lista. Se deben
+utilizar \href{https://docs.scala-lang.org/tour/tuples.html}{tuplas}
+para el resultado final.$\square$
+
+\section{Definicio de tipos algebraicos los Naturales}
+\label{sec:definicio-de-tipos}
+
+Los \href{https://es.wikipedia.org/wiki/N%C3%BAmero_natural}{números naturales} pueden ser definidos como un tipo de dato algebraico. Donde el caso base se tiene el \texttt{Cero} y el caso recursivo es el sucesor de un natural. En Haskell se definen de la siguiente manera.
+
+\begin{lstlisting}[language=Scala]
+data Nat = Cero | Suc Nat
+\end{lstlisting}
+
+  Donde \texttt{Nat} es el tipo. \texttt{Cero} y \texttt{Suc} son los constructores de valores.
+
+  \ejercicio Implemente los \texttt{Nat} en Scala. Tenga en cuenta la siguiente iteración.
+
+\begin{alltt}
+scala> val cero = Cero
+val cero: co.s4n.inmutable.nat.Nat.type = Cero
+scala> val uno = Suc(Cero)
+val cero: co.s4n.inmutable.nat.Suc = Suc(Cero)
+scala> val dos = Suc(Suc(Cero))
+val cero: co.s4n.inmutable.nat.Suc = Suc(Suc(Cero))
+\end{alltt}
+
+  $\square$
+
+  \ejercicio Implemente la función \texttt{fromNatToInt} que toma un número natural \texttt{Nat} y lo transforma a su valor \texttt{Int}. $\square$.
+  \ejercicio Implemente la función \texttt{fromIntToNat} que tomar valores enteros
+  positivo (inclusive le cero) y produce el correspondiente número natural. $\square$
+
+
+% \section{Bibliografía}
+% \label{sec:bibliografia}
+% \bibliographystyle{amsalpha}
+% \bibliography{S4N_Git_Tutorial}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

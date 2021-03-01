@@ -3,11 +3,11 @@
 1. Programación orientada a expresiones
 2. Funciones puras
 3. Funciones literales/Funciones Anónimas
-4. Funciones de clase y funciones de alto orden
+4. Funciones de primera clase y funciones de alto orden
 5. Clausuras
 6. Funciones aplicadas parcialmente
 7. Funciones curry
-8. Recursividad de cola
+8. Recursividad y recursividad de cola
 
 ---
 
@@ -38,7 +38,7 @@
 
 ---
 
-# Funciones literales/Funciones Anónimas
+# Funciones literales/Funciones anónimas
 
 * Un literal es la forma más simple de una expresión.
 * Scala le permite a usted expresar funciones como literales.
@@ -50,7 +50,45 @@
 
 ---
 
-# Recursividad
+# Funciones literales/Funciones anónimas
+
+* Una función literal es instanciada dentro de objetos llamados **funciones valores**.
+* Una función valor es una función objeto y puede ser invocada como cualquier otra función.
+
+---
+
+# Funciones de primera clase y funciones de alto orden
+
+* Todas las funciones son objetos.
+* En la programación funcional, las funciones son ciudadanos de primera clase.
+  1. Asignado a variables,
+  2. Pasado como argumentos a **otra funcion**
+  3. Retornados como valores de **otra funcion**
+
+---
+
+# Clausuras
+
+* Una clausura es una función, cuyo valor de retorno depende del valor de una o más variables declaradas por fuera de esta función.
+
+---
+
+# Funciones aplicadas parcialmente
+
+* En programación funcional cuando se invoca una función, esto recibe un nombre **aplicación**.
+* Cuando todos los parámetros son pasados a una función **aplicación completa**.
+* Cuando al menos uno de los parámetros no se paso, se llama **aplicación parcial**.
+
+---
+
+# Funciones currificadas
+
+* La currificación convierte una función con múltiples parámetros creando una cadena de funciones.
+* Cada elemento espera una único valor.
+
+---
+
+# Recursividad y recursividad de cola
 
 * Una función recursiva es una función que se llama a si misma.
 * La recursividad es importante dentro de al programación funcional.
@@ -98,3 +136,4 @@ x :: xs
 * Los vamos a entregar en una tupla con los dos elementos
 * No vamos a considerar la lista vacia
 * Nuestras listas tienen al menos un elemento.
+

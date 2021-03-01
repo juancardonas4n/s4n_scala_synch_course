@@ -1,0 +1,462 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{txfonts}
+\usepackage{graphicx}
+\usepackage{keystroke}
+\usepackage{color}
+\usepackage[colorlinks = true,
+linkcolor = green,
+urlcolor = blue,
+citecolor = yellow,
+anchorcolor = brown]{hyperref}
+\usepackage{listings}
+\usepackage{alltt}
+\usepackage{multicol}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\newcommand{\noterm}[1]{\color{blue} \langle #1 \rangle \color{blue}}
+\newcommand{\produce}{\color{red} \coloneqq \color{red}}
+\newcommand{\alter}{\color{red} \mid \color{red}}
+\newcommand{\catterm}[1]{\color{magenta} \text{#1} \color{magenta}}
+\newcommand{\term}[1]{\color{cyan} \text{#1} \color{cyan}}
+\newcommand{\openopt}{\color{black} \text{[} \color{black}}
+\newcommand{\closeopt}{\color{black} \text{]} \color{black}}
+\newcommand{\severals}{\color{black} \ldots \color{black}}
+
+\newcounter{ejercicio}
+\newcommand{\ejercicio}{\stepcounter{ejercicio}%
+  \paragraph\noindent\textbf{Ejercicio \theejercicio.\hspace{4pt}}}
+
+\newcounter{problema}
+\newcommand{\problema}{\stepcounter{problema}%
+  \paragraph\noindent\textbf{Problema \theproblema.\hspace{4pt}}}
+\newcommand{\WindowsLogo}{\raisebox{-0.1em}{%
+    \includegraphics[height=0.8em]{../../imagenes/Windows_3_logo_simplified}}}
+\newcommand{\WinKey}{\keystroke{\WindowsLogo}}
+
+\newcommand{\Subversion}{\href{https://subversion.apache.org/}{subversion}}
+\newcommand{\Riouxsvn}{\href{https://riouxsvn.com/}{Riouxsvn}}
+
+\title{Construcción de listas\\Listas}
+\date{26 de febrero de 2021}
+\author{S4N Campus}
+%\institute{S4N}
+
+\begin{document}
+\maketitle
+
+\section{Preliminares}
+\label{sec:preliminares}
+
+Este taller tiene como objetivo la creación de funciones recursivas
+para el manejo de listas y la creación de nuevas listas.
+
+\textbf{Nota:} Los ejemplos de listas debido a que sus salidas son muy extensas, vamos a optar por mostrar salidas más cortas. Si el resultado de una lista se presenta así:
+
+\begin{alltt}
+Const(1,Const(2,Const(3,Const(4,Const(5,Const(6,Const(7,Nil)))))))
+\end{alltt}
+
+En la salida correspondiente se va a mostrar así:
+
+\begin{alltt}
+List(1,2,3,4,5,6)
+\end{alltt}
+
+Esto se hace por comodidad\footnote{De quien le tocó escribir este taller: ¡Pobre hombre!}.
+
+\section{Construcción de listas}
+
+\ejercicio Implemente la función \texttt{take} que se encarga de tomar dos parámetros. El primero un valor entero positivo $n$ y el segundo una lista de valores de cualquier tiempo. Y esta función se encarga de tomar los $n$ primeros valores, si existen de la lista. La siguiente es la firma de la función:
+
+\begin{lstlisting}[language=Scala]
+def take(n:Int,lst:List[A]):List[A] = ???
+\end{lstlisting}
+
+Por ejemplo:
+
+\begin{alltt}
+scala> take(3,List("a","b","c","d","e"))
+val res0:List[String]=List("a","b","c")
+scala> take(0,List(1,2,3,4))
+val res1:List[Int] = Nil
+scala> take(6,List(1.0,2.0,3.0))
+val res2:List[Double] = List(1.0,2.0,3.0)
+\end{alltt}
+
+\ejercicio Implemente la función \texttt{init} que tiene la siguiente firma (\emph{signature})
+
+\begin{lstlisting}[language=Scala]
+def init[A](lst:List[A]):List[A] = ???
+\end{lstlisting}
+
+Esta función toma una lista y toma los valores iniciales excepto el último. Por ejemplo:
+
+\begin{alltt}
+scala> init(List(1,2,3,4,5,6))
+val res0:List[Int] = List(1,2,3,4,5)
+scala> init(List(1))
+val res1:List[Int] = Nil
+\end{alltt}
+
+\textbf{Nota:} La lista que se le pasa no puede ser vacía.
+$\square$
+
+\ejercicio Implemente la función \texttt{split}, recibe dos parámetros $n$ y una lista; divide la primera lista en $n$ elementos y los restantes quedan en la segunda lista. La siguiente es la signatura de la función:
+
+\begin{lstlisting}[language=Scala]
+def split[A](n:Int,lst:List[A]):(List[A],List[A]) = ???
+\end{lstlisting}
+
+Por ejemplo:
+
+\begin{alltt}
+scala> split(3,Lista(1,2,3,4,5,6,7))
+val res0:(List[Int],List[Int]) = (Lista(1,2,3), Lista(4,5,6,7))
+scala> split(1,Lista(1,2,3,4,5,6,7))
+val res1:(List[Int],List[Int]) = (Lista(1), Lista(2,3,4,5,6,7))
+scala> split(8,Lista(1,2,3,4,5,6,7))
+val res2:(List[Int],List[Int]) = (Lista(1,2,3,4,6,7), Nil)
+scala> split(0,Lista(1,2,3,4,5,6,7))
+val res3:(List[Int],List[Int]) = (Nil,Lista(1,2,3,4,6,7))
+\end{alltt}
+
+$\square$
+
+\ejercicio Implemente la función \texttt{zip} esta función fusiona dos listas de tipos diferentes en una lista de pares del mismo tamaño. La siguiente es la firma de la función:
+
+\begin{lstlisting}[language=Scala]
+def zip[A,B](lst1:List[A],lst2:List[B]):List[(A,B)] = ???
+\end{lstlisting}
+
+Por ejemplo:
+
+\begin{alltt}
+scala> zip(List(1,2,3),List(true,false,true,true))
+val res0:List[(Int,Bool)] = List((1,true),(2,false),(3,true))
+scala> zip(List(1,2,3,4),List(false,true,false))
+val res1:List[(Int,Bool)] = List((1,false),(2,true),(3,false))
+\end{alltt}
+$\square$
+
+\ejercicio Implemente la función \texttt{unzip} esta lista separa una lista de tuplas en dos listas distintas. La siguiente es la signatura de la función.
+
+\begin{lstlisting}[language=Scala]
+def unzip[A,B](lst:List[(A,B)]):(List[A],List[B]) = ???
+\end{lstlisting}
+
+Por ejemplo:
+
+\begin{alltt}
+scala> unzip(List((1,"a"),(2,"b"),(3,"b"))
+val res0:(List[Int],List[String]) = (List(1,2,3),List("a","b","c"))
+\end{alltt}
+
+$\square$
+
+\ejercicio Implemente la función \texttt{reverse}. Toma una lista y devuelve una versión invertida de la misma. La siguiente es la signatura de la función.
+
+\begin{lstlisting}[language=Scala]
+def reverse[A](lst:List[A]):List[A] = ???
+\end{lstlisting}
+
+Por ejemplo:
+
+\begin{alltt}
+scala> reverse(List("a","b","c"))
+val res0:List[String] = List("c", "b", "a")
+scala> reverse(List(1,2,3,4))
+val res1:List[Int] = List(4,3,2,1)
+scala> reverse(Nil)
+val res2:List[A] = Nil
+\end{alltt}
+
+\ejercicio Implemente la función \texttt{intersperse}. Esta se encarga de entremezclar un valor entre los elementos originales de la lista. La siguiente es la signatura de la función.
+
+\begin{lstlisting}[language=Scala]
+def intersperse[A](elem:A,lst:List[A]):List[A] = ???
+\end{lstlisting}
+
+Por ejemplo:
+
+\begin{alltt}
+scala> intersperse(1,List(2,3,4,5))
+val res0:List[Int] = List(2,1,3,1,4,1,5)
+scala> intersercer("a", List("b","c","d"))
+val res1:List[String] = List("b","a","c","a", "d")
+\end{alltt}
+
+$\square$
+
+\ejercicio Implemente la función \texttt{concat}. Es función recibe una lista de lista valores de un tipo \texttt{A} y la transforma en una lista de valores de tipo \texttt{A}. La siguiente es la signatura de la función.
+
+\begin{lstlisting}[language=Scala]
+def concat[A](List[List[A]]):List[A] = ???
+\end{lstlisting}
+
+
+Por ejemplo:
+
+\begin{alltt}
+scala> concat(List(List(1,2,3),List(4,5,6)))
+val res0:Lista[Int] = List(1,2,3,4,5,6)
+scala> concat(List(List("a","b"),List("c","d","e")))
+val res1:Lista[String] = List("a","b","c","d","e")
+scala> concat(List(List(1.0,2.0),Nil,List(3.0,4.0)))
+val res2:Lista[Double] = List(1.0,2.0,3.0,4.0)
+\end{alltt}
+$\square$
+
+\section{Naturales}
+\label{sec:naturales}
+
+Recordando los números naturales definidos en el taller anterior, vamos a implementar las siguiente operaciones.
+
+\ejercicio Implemente la función \texttt{addNat}. Esta función recibe dos naturales y se encarga de sumarlos produciendo un valor correcto. La siguiente es la signatura de la función.
+
+\begin{lstlisting}[language=Scala]
+def addNat(nat1:Nat,nat2:Nat):Nat = ???
+\end{lstlisting}
+
+Por ejemplo:
+
+\begin{alltt}
+scala> addNat(Cero,Suc(Cero))
+val res0:Nat = Suc(Cero)
+scala> addNat(Suc(Suc(Cero)),Suc(Cero))
+val res1:Nat = Suc(Suc(Suc(Cero)))
+scala> addNat(Suc(Suc(Suc(Cero))),Suc(Suc(Cero)))
+val res2:Nat = Suc(Suc(Suc(Suc(Suc(Cero)))))
+\end{alltt}
+
+$\square$
+
+\pagebreak
+\ejercicio Implemente la función \texttt{prodNat}. Esta función realiza la multiplicación de dos valores naturales. La siguiente es la
+firma de la función:
+
+\begin{lstlisting}[language=Scala]
+def prodNat(nat1:Nat,nat2:Nat):Nat = ???
+\end{lstlisting}
+
+Por ejemplo:
+
+\begin{alltt}
+scala> prodNat(Cero,Suc(Cero))
+val res0:Nat = Cero
+scala> prodNat(Suc(Suc(Cero)),Suc(Cero))
+val res1:Nat = Suc(Suc(Cero))
+scala> prodNat(Suc(Suc(Suc(Cero))),Suc(Suc(Cero)))
+val res2:Nat = Suc(Suc(Suc(Suc(Suc(Suc(Cero))))))
+\end{alltt}
+
+$\square$
+
+\section{Árboles}
+\label{sec:arboles}
+
+Vamos ahora definir un árbol utilizando tipos de datos algebraicos.
+
+\begin{lstlisting}[language=Scala]
+sealed trait Tree[+A]
+case class Leaf[A](value:A) extends Tree[A]
+case class Branch[A](left:Tree[A],right:Tree[A]) extends Tree[A]
+\end{lstlisting}
+
+\ejercicio Implemente la función \texttt{size} que cuente el número de nodos \texttt{Leaf} y \texttt{Branches} en un árbol.
+
+La siguiente es la firma de la función:
+
+\begin{lstlisting}[language=Scala]
+def size[A](tree:Tree[A]):Int = ???
+\end{lstlisting}
+
+Por ejemplo:
+
+\begin{alltt}
+scala> size(Leaf(10))
+val res0:Int = 1
+scala> size(Branch(Leaf(10),Leaf(20)))
+val res1:Int = 3
+scala> size(Branch(Branch(Leaf(10),Leaf(20)),Leaf(30)))
+val res2:Int = 5
+\end{alltt}
+
+$\square$
+
+\ejercicio Implemente la función \texttt{depth} que retorna la
+longitud máxima desde profundidad desde la raíz a cualquier hoja.
+
+La siguiente es la firma de la función:
+
+\begin{lstlisting}[language=Scala]
+def depth[A](tree:Tree[A]):Int = ???
+\end{lstlisting}
+
+Por ejemplo:
+
+\begin{alltt}
+scala> depth(Leaf(10))
+val res0:Int = 1
+scala> depth(Branch(Leaf(10),Leaf(20)))
+val res1:Int = 2
+scala> depth(Branch(Branch(Leaf(10),Leaf(20)),Leaf(30)))
+val res2:Int = 3
+depth(Branch(Branch(Leaf(10),Leaf(20)),Branch(Leaf(30),Leaf(40))))
+val res2:Int = 3
+\end{alltt}
+
+$\square$
+
+\section{Funciones de alto orden}
+\label{sec:funciones-de-alto}
+
+\ejercicio Mire que pasa cuando usted pasa \texttt{Nil} y \texttt{Const} a la función \texttt{foldRight}, como en la siguiente invocación:
+
+\begin{lstlisting}[language=Scala]
+scala> foldRight(List(9L,6L,7L), Nil:List[Long])(Const(_,_)).
+\end{lstlisting}
+
+¿Qué piensa de la relación que existe entre \texttt{foldRight} y los constructores de datos entre listas?
+$\square$
+
+\ejercicio Compute la función \texttt{length} de una lista utilizando
+\texttt{foldRight}. La siguiente es la firma de la función:
+
+\begin{lstlisting}[language=Scala]
+def length[A](lst:List[A])=Int = ???
+\end{lstlisting}
+
+$\square$
+
+\ejercicio Compute la función \texttt{and} utilizando
+\texttt{foldRight}. Recuerde que la firma de la función \texttt{and}
+es la siguiente:
+
+\begin{lstlisting}[language=Scala]
+def and(lst:List[Boolean]): Boolean = ???
+\end{lstlisting}
+$\square$
+
+\ejercicio La función \texttt{takeWhile} aplicada a un predicado
+\texttt{p} y a una lista \texttt{lst}, retorna el prefijo más largo
+(posiblemente vacío) que satisface \texttt{p}. El siguiente es la
+signatura de la función:
+
+\begin{lstlisting}[language=Scala]
+def takeWhile[A](lst:List[A])(p:A=>Boolean):List[A] = ???
+\end{lstlisting}
+$\square$
+
+\ejercicio La siguiente es la firma de la función \texttt{filter}.
+
+\begin{lstlisting}[language=Scala]
+def filter[A](lst:List[A])(p:A=>Boolean):List[A] = ???
+\end{lstlisting}
+
+Compute la función \texttt{filter} utilizando \texttt{foldRight}. $\square$
+
+\ejercicio Implemente la función \texttt{unzip} esta lista separa una
+lista de tuplas en dos listas distintas. La siguiente es la signatura
+de la función.
+
+\begin{lstlisting}[language=Scala]
+def unzip[A,B](lst:List[(A,B)]):(List[A],List[B]) = ???
+\end{lstlisting}
+
+Compute la función \texttt{unzip} utilizando \texttt{foldRight}.
+$\square$
+
+\ejercicio Compute la función \texttt{lengthL} de una lista utilizando
+\texttt{foldLeft}. La siguiente es la firma de la función:
+
+\begin{lstlisting}[language=Scala]
+def lengthL[A](lst:List[A])=Int = ???
+\end{lstlisting}
+
+$\square$
+
+\ejercicio Compute la función \texttt{andL} utilizando
+\texttt{foldLeft}. Recuerde que la firma de la función \texttt{andL}
+es la siguiente:
+
+\begin{lstlisting}[language=Scala]
+def andL(lst:List[Boolean]): Boolean = ???
+\end{lstlisting}
+$\square$
+
+\ejercicio La función \texttt{takeWhileL} aplicada a un predicado
+\texttt{p} y a una lista \texttt{lst}, retorna el prefijo más largo
+(posiblemente vacío) que satisface \texttt{p}. El siguiente es la
+signatura de la función:
+
+\begin{lstlisting}[language=Scala]
+def takeWhileL[A](lst:List[A])(p:A=>Boolean):List[A] = ???
+\end{lstlisting}
+$\square$
+
+\ejercicio La siguiente es la firma de la función \texttt{filterL}.
+
+\begin{lstlisting}[language=Scala]
+def filterL[A](lst:List[A])(p:A=>Boolean):List[A] = ???
+\end{lstlisting}
+
+Compute la función \texttt{filter} utilizando \texttt{foldLeft}. $\square$
+
+\ejercicio Implemente la función \texttt{unzipL} esta lista separa una
+lista de tuplas en dos listas distintas. La siguiente es la signatura
+de la función.
+
+\begin{lstlisting}[language=Scala]
+def unzipL[A,B](lst:List[(A,B)]):(List[A],List[B]) = ???
+\end{lstlisting}
+
+Compute la función \texttt{unzip} utilizando \texttt{foldLeft}.
+$\square$
+
+% \section{Bibliografía}
+% \label{sec:bibliografia}
+% \bibliographystyle{amsalpha}
+% \bibliography{S4N_Git_Tutorial}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
