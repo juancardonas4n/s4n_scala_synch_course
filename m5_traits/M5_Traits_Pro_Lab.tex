@@ -1,0 +1,172 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{txfonts}
+\usepackage{graphicx}
+\usepackage{keystroke}
+\usepackage{color}
+\usepackage[colorlinks = true,
+linkcolor = green,
+urlcolor = blue,
+citecolor = yellow,
+anchorcolor = brown]{hyperref}
+\usepackage{listings}
+\usepackage{alltt}
+\usepackage{multicol}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\newcommand{\noterm}[1]{\color{blue} \langle #1 \rangle \color{blue}}
+\newcommand{\produce}{\color{red} \coloneqq \color{red}}
+\newcommand{\alter}{\color{red} \mid \color{red}}
+\newcommand{\catterm}[1]{\color{magenta} \text{#1} \color{magenta}}
+\newcommand{\term}[1]{\color{cyan} \text{#1} \color{cyan}}
+\newcommand{\openopt}{\color{black} \text{[} \color{black}}
+\newcommand{\closeopt}{\color{black} \text{]} \color{black}}
+\newcommand{\severals}{\color{black} \ldots \color{black}}
+
+\newcounter{ejercicio}
+\newcommand{\ejercicio}{\stepcounter{ejercicio}%
+  \paragraph\noindent\textbf{Ejercicio \theejercicio.\hspace{4pt}}}
+
+\newcounter{problema}
+\newcommand{\problema}{\stepcounter{problema}%
+  \paragraph\noindent\textbf{Problema \theproblema.\hspace{4pt}}}
+\newcommand{\WindowsLogo}{\raisebox{-0.1em}{%
+    \includegraphics[height=0.8em]{../../imagenes/Windows_3_logo_simplified}}}
+\newcommand{\WinKey}{\keystroke{\WindowsLogo}}
+
+\newcommand{\Subversion}{\href{https://subversion.apache.org/}{subversion}}
+\newcommand{\Riouxsvn}{\href{https://riouxsvn.com/}{Riouxsvn}}
+
+\title{\emph{Traits} en Scala}
+\date{3 de marzo de 2021}
+\author{S4N Campus}
+%\institute{S4N}
+
+\begin{document}
+\maketitle
+
+\section{Preliminares}
+\label{sec:preliminares}
+
+Este taller tiene como objetivo poner en practica los elementos de \emph{traits} en Scala.
+
+\section{Traits}
+\label{sec:traits}
+
+\ejercicio Vamos a modelar un comportamiento común a gatos, leones, tigres, panteras, jaguares, etc. Vamos a definir una interface común (\emph{trait})  \texttt{Felino}. En la figura~\ref{fig:jerarquia-felinos}. Defina el \emph{trait} \texttt{Felino} y las diferentes sub-especies de la super clase ella. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=10cm,height=8cm]{imagenes/JerarquiaFelinos}
+  \caption{Jerarquía de gatos}
+  \label{fig:jerarquia-felinos}
+\end{figure}
+
+Tenga en cuenta que:
+
+\begin{itemize}
+\item En \texttt{Felino} se encuentra el color.
+\item En \texttt{Felino} se encuentra el sonido que hace cada uno de los diferentes tipos.
+\item Únicamente \texttt{Gato} tiene una comida favorita.
+\item Un \texttt{León} tiene un tamaño de melena.
+\item Recuerde que todos los atributos tiene sus correspondientes métodos \emph{getters}.
+\item Los constructores se hacen en las clases no en los \emph{traits}.
+\end{itemize}
+
+$\square$
+
+\ejercicio Define un \emph{trait} llamado \texttt{Forma} y tiene tres métodos abstractos:
+
+\begin{itemize}
+\item \texttt{tamaño} que retorna el número de lados.
+\item \texttt{perímetro} que retorna la longitud total de sus lados.
+\item \texttt{área} que retorna el área de la forma en cuestión. 
+\end{itemize}
+
+Implemente \texttt{Forma} con tres clases: \texttt{Círculo}, \texttt{Rectángulo} y \texttt{Cuadrado}. En cada caso implemente los tres métodos. Asegure un constructor principal con los parámetros para cada forma y que los campos son accesibles (\emph{getters}).
+
+$\square$
+
+\ejercicio La solución del ejercicio anterior produjo tres tipos diferentes de formas. Sin embargo, este no modela la relación entre los elementos correctamente. Un \texttt{Cuadrado} no es solamente una forma también es una forma de tipo \texttt{Rectángulo} donde la longitud y la altura son iguales.
+
+Refactorize la solución del anterior ejercicio así el \texttt{Cuadrado} y \texttt{Rectángulo} son subtipos de un tipo común llamado \texttt{Rectangular}.
+
+\textbf{Note:} Un \emph{trait} puede extender otro \emph{trait}.
+
+$\square$
+
+\section{Sealed Traits}
+\label{sec:sealed-traits}
+
+\ejercicio Revisemos la forma implementada en la anterior seccion~\ref{sec:traits}. En primer lugar haga \texttt{Forma} en un \texttt{sealed trait}. Entonces, escriba un objeto único (\emph{singleton object}) llamado \texttt{Draw} con un método \texttt{apply} que tomar una \texttt{Forma} como argumento y returna un descripción de él en la terminal.
+
+Por ejemplo:
+
+\begin{alltt}
+scala> Draw(Circulo(10))
+res0: String = Un circulo de radio 10.0cm
+scala> Draw(Rectangulo(3,4))
+res1: String = Un rectangulo de ancho 3.0cm y largo 4.0cm
+\end{alltt}
+
+Finalmente, verifique que el compilador se queja cuando se comente una clausula \texttt{case} en el método \texttt{Draw}.
+
+$\square$
+
+\ejercicio Escriba una clase \texttt{Color}
+
+\begin{enumerate}
+\item Da al color tres propiedades: RGB (Red,Green,Blue).
+\item Cree tres colores predefinidos: \texttt{Rojo}, \texttt{Amarillo} y \texttt{Rosa}.
+\item Suministre un medio para que la gente produzca sus propios colores personalizados de \texttt{Color} con sus propios valores de RGB.
+\end{enumerate}
+
+Este ejercicio es abierto a interpretación. $\square$
+
+
+% \section{Bibliografía}
+% \label{sec:bibliografia}
+% \bibliographystyle{amsalpha}
+% \bibliography{S4N_Git_Tutorial}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

@@ -170,7 +170,7 @@ foldRight(List(1,2,3), Nil:List[Int]) (Const(_,_))
 
 * Ejercicio. Compute utilizando **foldRight**
 ```{.scala}
-def length[A](as: List[A]): Int = ???
+def sum(as: List[Int]): Int = ???
 ```
 ---
 

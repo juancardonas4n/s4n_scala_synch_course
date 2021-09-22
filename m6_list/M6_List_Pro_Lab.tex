@@ -1,0 +1,217 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{txfonts}
+\usepackage{graphicx}
+\usepackage{keystroke}
+\usepackage{color}
+\usepackage[colorlinks = true,
+linkcolor = green,
+urlcolor = blue,
+citecolor = yellow,
+anchorcolor = brown]{hyperref}
+\usepackage{listings}
+\usepackage{alltt}
+\usepackage{multicol}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\newcommand{\noterm}[1]{\color{blue} \langle #1 \rangle \color{blue}}
+\newcommand{\produce}{\color{red} \coloneqq \color{red}}
+\newcommand{\alter}{\color{red} \mid \color{red}}
+\newcommand{\catterm}[1]{\color{magenta} \text{#1} \color{magenta}}
+\newcommand{\term}[1]{\color{cyan} \text{#1} \color{cyan}}
+\newcommand{\openopt}{\color{black} \text{[} \color{black}}
+\newcommand{\closeopt}{\color{black} \text{]} \color{black}}
+\newcommand{\severals}{\color{black} \ldots \color{black}}
+
+\newcounter{ejercicio}
+\newcommand{\ejercicio}{\stepcounter{ejercicio}%
+  \paragraph\noindent\textbf{Ejercicio \theejercicio.\hspace{4pt}}}
+
+\newcounter{problema}
+\newcommand{\problema}{\stepcounter{problema}%
+  \paragraph\noindent\textbf{Problema \theproblema.\hspace{4pt}}}
+\newcommand{\WindowsLogo}{\raisebox{-0.1em}{%
+    \includegraphics[height=0.8em]{../../imagenes/Windows_3_logo_simplified}}}
+\newcommand{\WinKey}{\keystroke{\WindowsLogo}}
+
+\newcommand{\Subversion}{\href{https://subversion.apache.org/}{subversion}}
+\newcommand{\Riouxsvn}{\href{https://riouxsvn.com/}{Riouxsvn}}
+
+\title{\emph{List}s en Scala}
+\date{4 de marzo de 2021}
+\author{S4N Campus}
+%\institute{S4N}
+
+\begin{document}
+\maketitle
+
+\section{Preliminares}
+\label{sec:preliminares}
+
+Este taller tiene como objetivo poner en practica los elementos de
+\emph{List} en Scala y sus operaciones.
+
+\section{Listas}
+\label{sec:listas}
+
+\ejercicio La función \texttt{subs} me permite obtener todos los
+subconjuntos que un conjunto tiene. En este ejemplo vamos a utilizar
+listas como un conjunto.
+
+\begin{lstlisting}[language=Scala]
+def subs[A](lst:List[A]):List[List[A]] = ???
+\end{lstlisting}
+
+Por ejemplo (En las pruebas las listas no tendrá elementos repetidos).
+
+\begin{alltt}
+scala> subs(List(1,2))
+val res0:List[List[Int]]=List(List(),List(1),List(2),List(1,2))
+scala> subs(List("a","b","c"))
+val res1:List[List[String]]=List(List(),List("a"),List("b"),List("c"),
+                                 List("a","b"),List("a","c"),
+                                 List("b","c"),List("c","a"),
+                                 List("a","b","c"))
+\end{alltt}
+
+\ejercicio La permutación es la manera de combinar todos los posibles
+elementos de una lista en un conjunto de listas con todas las
+combinaciones posibles. En Scala el tipo de dato \texttt{List} tiene
+implementado un método de como obtener dichas listas. Nosotros vamos a
+implementar una función \texttt{permutaciones} que dada la siguiente
+firma:
+
+\begin{lstlisting}[language=Scala]
+def permutaciones[A](lst:List[A]):List[List[A]] = ???
+\end{lstlisting}
+
+\emph{\textbf{Sin utilizar}} el método \texttt{permutations} en clase
+alguna de Scala implementar la forma de computar todas las
+permutaciones.
+
+Por ejemplo:
+
+\begin{alltt}
+scala> permutaciones(List("a","b","c"))
+res0:List[List[String]]=List(List("a","b","c"),List("b","a","c"),
+                             List("b","c","a"),List("a","c","b"),
+                             List("c","a","b"),List("c","b","a"))
+scala> permutaciones(List(2,3,4))
+res1:List[List[Int]]=List(List(2,3,4),List(3,2,4),
+                          List(3,4,2),List(2,4,3),
+                          List(4,2,3),List(4,3,2))
+\end{alltt}
+
+$\square$
+
+
+
+\ejercicio Defina una función \texttt{predAtPos} que tiene la siguiente firma:
+
+\begin{lstlisting}[language=Scala]
+def predAtPos[A](lst:List[A],preds:List[(Int,p:A=>Boolean)]):List[[Boolean]] = ???
+\end{lstlisting}
+
+Esta función recibe dos parámetros \texttt{lst} y \texttt{preds}. En \texttt{preds} es una tupla donde el primer elemento y el segundo
+es un predicado, el primer elemento tiene el índice de la \texttt{lst} donde debe aplicar el predicado. Cada aplicación de un \texttt{pred} produce una lista singular con el valor obtenido del predicado o lista vacía si el indice no es válido en la lista.
+
+Por ejemplo:
+
+{\scriptsize
+\begin{alltt}
+scala> predAtPos(List(1,2,3,4,5,6),List((4,_==5),(0,_%mod 2 == 1), (5,_%mod 2 == 1)))
+res0:List[List[Boolean]] = List(List(true),List(true),List(false))
+scala> predAtPos(List(1,2,3,4,5,6),List((1,_<=2),(6,_%mod 2 == 0),(0,_>0)))
+res1:List[List[Boolean]] = List(List(true),List(),List(true))
+\end{alltt}
+}
+
+$\square$
+
+\ejercicio Implemente la función \texttt{circulaI} que tiene la siguiente firma:
+
+\begin{lstlisting}[language=Scala]
+def circulaI[A](lst:List[A]):Lista[A] = ???
+\end{lstlisting}
+
+Esta función se encarga permuta circularmente de izquierda la lista \texttt{lst}
+
+Por ejemplo:
+
+\begin{alltt}
+scala> circulaI(List(1,2,3,4,5))
+res0:List[Int] = List[2,3,4,5,1]
+scala> circulaI(List("a"))
+res1:List[String] = List("a")
+scala> circulaI(List(true,false,true))
+res2:List[Boolean] = List(false,true,true)
+\end{alltt}
+
+
+\ejercicio Implemente la función \texttt{circulaD} que tiene la siguiente firma:
+
+\begin{lstlisting}[language=Scala]
+def circulaD[A](lst:List[A]):Lista[A] = ???
+\end{lstlisting}
+
+Esta función se encarga permuta circularmente de derecha la lista \texttt{lst}
+
+Por ejemplo:
+
+\begin{alltt}
+scala> circulaD(List(1,2,3,4,5))
+res0:List[Int] = List[5,1,2,3,4,5]
+scala> circulaD(List("a"))
+res1:List[String] = List("a")
+scala> circulaD(List(true,false,true))
+res2:List[Boolean] = List(true,true,false)
+\end{alltt}
+
+\ejercicio 
+
+% \section{Bibliografía}
+% \label{sec:bibliografia}
+% \bibliographystyle{amsalpha}
+% \bibliography{S4N_Git_Tutorial}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
