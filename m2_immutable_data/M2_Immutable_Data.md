@@ -1,28 +1,10 @@
-# Agenda
-
-1. Recursividad de cola y funciones internas
-2. Definiendo estructuras de datos funcionales
-3. Coincidencia de patrones
-4. Definición de funciones recursivas sobre listas
-
----
-
 # Objetivos de la unidad de aprendizaje
 
 * Entender y utilizar el concepto de datos inmutables.
-* Entender y utilizar los tipos de datos algebraicos.
+* Entender y utilizar los tipos de datos algebraicos (TDA).
 * Introduccir los traits.
 * Entender y definir los objetos de compañía.
-* Entender y utilizar la coincidencia de patrones.
-
----
-
-# Recursividad de cola y funciones internas
-
-* La definición de funciones en Scala es también recursiva.
-* Dentro de una función se puede definir funciones.
-* Esto sirve como un mecanismo funciones privadas y auxiliares.
-* La recursividad de cola requiere de un mecanismo similar.
+* Conectar la coincidencia de patrones con los TDA.
 
 ---
 
@@ -40,24 +22,13 @@
 
 # Definiendo estructuras de datos funcionales
 
-* Una estructuras de datos funcional es operada con funciones puras.
+* Las estructuras de datos funcionales son operadas con funciones puras.
 * Una función pura no debe cambiar los datos en el lugar.
 * Una función pura no debe ejecutar otros efectos colaterales.
 * No se actualizan, ni se modifican.
+* Se crean.
 
 ---
-
-# Definiendo estructuras de datos funcionales
-
-```{.scala}
-package co.s4n.inmutable.list
-
-sealed trait List[+A]
-case object Nil extends List[Nothing]
-case class Const[+A](h: A, t: List[A]) extends List[A]
-```
-
---- 
 
 # Definiendo estructuras de datos funcionales (traits)
 
@@ -77,7 +48,7 @@ trait Equal {
 }
 ```
 
---- 
+---
 
 # Definiendo estructuras de datos funcionales (traits)
 
@@ -91,7 +62,7 @@ trait Equal {
 # Definiendo estructuras de datos funcionales
 
 ```{.scala}
-package co.s4n.inmutable.List
+package co.s4n.inmutable.list
 
 sealed trait List[+A]
 case object Nil extends List[Nothing]
@@ -105,6 +76,18 @@ case class Const[+A](h: A, t: List[A]) extends List[A]
 * Hay dos definiciones de constructores de datos.
 * Una lista puede ser vacía
 * Una lista consiste de un elemento inicial, seguida de una lista (posiblemente no vacía).
+
+---
+
+# Definiendo estructuras de datos funcionales
+
+```{.scala}
+package co.s4n.inmutable.List
+
+sealed trait List[+A]
+case object Nil extends List[Nothing]
+case class Const[+A](h: A, t: List[A]) extends List[A]
+```
 
 ---
 
@@ -153,3 +136,70 @@ val lst4: List[Double] = Const(2.0, lst2)
 
 * Necesitamos un constructor más poderoso.
 * Requerimos utilizar object companions.
+
+---
+
+# Construcción de listas
+
+* Implementar función
+```{.scala}
+def const[A](elem:A, lst:List[A]):List[A] = ???
+```
+* Implementar función
+```{.scala}
+def append[A](lst1:List[A], lst2:List[A]):List[A] = ???
+```
+
+---
+
+# Construcción de listas
+
+* Implementar función
+```{.scala}
+def init[A](lst:List[A]):List[A] = ???
+```
+* Implementar función
+```{.scala}
+def drop[A](n:Int,lst:List[A]):List[A] = ???
+```
+
+---
+
+
+# Construcción de listas
+
+* Implementar función
+```{.scala}
+def split[A](n:Int,lst:List[A]):(List[A],List[A]) = ???
+```
+* Implementar función
+```{.scala}
+def zip[A,B](lst1:List[A],lst2:List[B]):(List[A],List[B]) = ???
+```
+
+---
+
+
+# Construcción de listas
+
+* Implementar función
+```{.scala}
+def split[A](n:Int,lst:List[A]):(List[A],List[A]) = ???
+```
+* Implementar función
+```{.scala}
+def zip[A,B](lst1:List[A],lst2:List[B]):(List[A],List[B]) = ???
+```
+
+---
+
+# Construcción de listas
+
+* Implementar la función
+```{.scala}
+def dropWhile[A](lst:List[A],f:A=>Boolean):List[A] = ???
+```
+* Mejorando la inferencia de tipos para funciones de alto orden
+```{.scala}
+def dropWhile[A](lst:List[A]... = ???
+```

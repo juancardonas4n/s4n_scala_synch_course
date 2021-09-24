@@ -144,7 +144,7 @@ La función \texttt{esCero} nos muestra como implementar la coincidencia de patr
 \begin{lstlisting}[language=Scala]
 def longitud(lst:Lista):Int = lst match {
    case Vacia()     => 0
-   case Cons(i,lst) => 1 + longitud
+   case Cons(i,lstp) => 1 + longitud(lstp)
 }
 \end{lstlisting}
 
@@ -172,7 +172,6 @@ object Main extends App {
   def imprimirLista(lst:Lista):String = ???
   def invertirLista(lst:Lista):Lista = ???
   val lista = leerArchivo(args(0))
-
   ...
 }
 \end{lstlisting}

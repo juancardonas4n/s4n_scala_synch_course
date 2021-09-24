@@ -73,8 +73,9 @@ anchorcolor = brown]{hyperref}
 \newcommand{\Riouxsvn}{\href{https://riouxsvn.com/}{Riouxsvn}}
 
 \title{Taller de Tipos de datos inmutables\\Listas}
-\date{25 de febrero de 2021}
-\author{S4N Campus}
+% \date{25 de febrero de 2021}
+\date{24 de septiembre de 2021}
+\author{EPAM Latam - S4N Campus}
 %\institute{S4N}
 
 \begin{document}
@@ -172,8 +173,8 @@ valor (mínimo,máximo) de todos los valores en la lista. Se deben
 utilizar \href{https://docs.scala-lang.org/tour/tuples.html}{tuplas}
 para el resultado final.$\square$
 
-\section{Definicio de tipos algebraicos los Naturales}
-\label{sec:definicio-de-tipos}
+\section{Definición de tipos algebraicos los Naturales}
+\label{sec:def-tda-nat}
 
 Los \href{https://es.wikipedia.org/wiki/N%C3%BAmero_natural}{números naturales} pueden ser definidos como un tipo de dato algebraico. Donde el caso base se tiene el \texttt{Cero} y el caso recursivo es el sucesor de un natural. En Haskell se definen de la siguiente manera.
 
@@ -196,10 +197,38 @@ val cero: co.s4n.inmutable.nat.Suc = Suc(Suc(Cero))
 
   $\square$
 
-  \ejercicio Implemente la función \texttt{fromNatToInt} que toma un número natural \texttt{Nat} y lo transforma a su valor \texttt{Int}. $\square$.
-  \ejercicio Implemente la función \texttt{fromIntToNat} que tomar valores enteros
-  positivo (inclusive le cero) y produce el correspondiente número natural. $\square$
+  \ejercicio Implemente la función \texttt{fromNatToInt} que toma un
+  número natural \texttt{Nat} y lo transforma a su valor
+  \texttt{Int}. $\square$.  \ejercicio Implemente la función
+  \texttt{fromIntToNat} que tomar valores enteros positivo (inclusive
+  le cero) y produce el correspondiente número natural. $\square$
+  \ejercicio Implemente la función \texttt{natToString} que convierta
+  el número en una cadena de caracteres equivalente a su forma TDA. $\square$
+  \ejercicio Implemente la función \texttt{sumaNat} que sume dos valores naturales y obtenga su correspondiente valor
+  natural. $\square$
+  \ejercicio Implemente la función \texttt{restaNat} que del valor natural $nat_1$ el valor $nat_2$, con la condición 
+  $nat_1\geq{}nat_2$. $\square$.
+  \ejercicio Implemente la función \texttt{multNat} que multiplica dos valores naturales y produce su equivalente valor
+  natural. $\square$
 
+\section{Árbol binario}
+\label{sec:def-tda-arbol}
+
+Un árbol se puede definir de forma recursiva y podemos establecer que un árbol es:
+
+\begin{itemize}
+\item Una hoja que no tiene hijos y que contiene un valor de algún tipo.
+\item Un nodo binario que puede a los sumo dos hijos, uno por la derecha otro por la izquierda y el nodo mismo tiene un valor
+  de algún tipo.
+\end{itemize}
+
+\ejercicio Implemente el TDA de forma que cumpla con los postulados anteriores. $\square$
+\ejercicio Implemente un objeto de compañía del mismo. $\square$
+\ejercicio Implemente una función que busque un elemento en un árbol \texttt{buscarElemArbol},
+la función tiene la siguiente firma:
+\begin{lstlisting}[language=scala]
+def buscarElemArbol[A](a:A,arbol:Arbol[A]):Boolean = ???
+\end{lstlisting}
 
 % \section{Bibliografía}
 % \label{sec:bibliografia}

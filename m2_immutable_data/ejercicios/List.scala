@@ -1,8 +1,8 @@
 package co.s4n.inmutable.list
+
 sealed trait List[+A]
 case object Nil extends List[Nothing]
 case class Const[+A](h: A, t: List[A]) extends List[A]
-
 
 // ejercicio 1. El tercer caso respuesta 9
 object List {

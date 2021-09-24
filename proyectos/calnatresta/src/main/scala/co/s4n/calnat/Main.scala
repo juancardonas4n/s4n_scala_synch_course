@@ -8,29 +8,29 @@ object Main extends App {
     s.toInt
   }
   def esCero(nat:Nat) = nat match {
-    case Cero()   => true
+    case Cero     => true
     case Suc(nat) => false
   }
   def esMayorIgual(nat1:Nat,nat2:Nat):Boolean = nat1 match {
-    case Cero() => nat2 match {
-      case Cero() => true
+    case Cero => nat2 match {
+      case Cero   => true
       case _      => false
     }
     case Suc(pnat) => nat2 match {
-      case Cero() => true
+      case Cero      => true
       case Suc(snat) => esMayorIgual(pnat,snat)
     }
   }
   def conIntANat(i:Int):Nat = i match {
-    case 0 => Cero()
+    case 0 => Cero
     case n => Suc(conIntANat(n - 1))
   }
   def imprimirNat(nat:Nat):String = nat match {
-    case Cero() => "Cero"
+    case Cero   => "Cero"
     case Suc(n) => "Suc(" + imprimirNat(n) + ")"
   }
   def restaNat(nat1:Nat,nat2:Nat):Nat = nat2 match {
-    case Cero() => nat1
+    case Cero    => nat1
     case Suc(n) => nat1 match {
       case Suc(n1) => restaNat(n1,n)
     }

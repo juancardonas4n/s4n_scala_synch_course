@@ -8,19 +8,19 @@ object Main extends App {
     s.toInt
   }
   def esCero(nat:Nat) = nat match {
-    case Cero()   => true
+    case Cero   => true
     case Suc(nat) => false
   }
   def fromInt2Nat(i:Int):Nat = i match {
-    case 0 => Cero()
+    case 0 => Cero
     case n => Suc(fromInt2Nat(n - 1))
   }
   def print2Nat(nat:Nat):String = nat match {
-    case Cero() => "Cero"
+    case Cero => "Cero"
     case Suc(n) => "Suc(" + print2Nat(n) + ")"
   }
   def sumaNat(nat1:Nat,nat2:Nat):Nat = nat1 match {
-    case Cero() => nat2
+    case Cero => nat2
     case Suc(n) => Suc(sumaNat(n,nat2))
   }
   val i1 = leerInt("Leer primer entero ")
